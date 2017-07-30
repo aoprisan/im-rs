@@ -44,6 +44,8 @@
 //! of their enjoyment of the word 'snoc,' even though it's
 //! reportedly not a readily intuitive term).
 
+#![cfg_attr(has_specialisation, feature(specialization))]
+
 #[cfg(any(test, feature = "quickcheck"))]
 #[macro_use]
 extern crate quickcheck;
@@ -57,6 +59,11 @@ extern crate proptest;
 
 #[cfg(feature = "proptest")]
 proptest!{}
+
+#[cfg(any(test, feature = "serde"))]
+extern crate serde;
+#[cfg(test)]
+extern crate serde_json;
 
 #[macro_use]
 pub mod conslist;
@@ -79,3 +86,6 @@ pub use iter::unfold;
 
 #[cfg(test)]
 pub mod test;
+
+#[cfg(any(test, feature = "serde"))]
+pub mod ser;
